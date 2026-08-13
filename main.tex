@@ -1,0 +1,1467 @@
+% ================================================================
+%  PROBABILITY THEORY: A COMPREHENSIVE TEXTBOOK
+%  Version 2.1  |  Integrated Data Hills Analysis  |  No Repetition
+% ================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ---- Packages ----
+\usepackage[a4paper,left=2.7cm,right=2.5cm,top=2.8cm,bottom=2.8cm,
+            headheight=16pt]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools,bm}
+\usepackage{booktabs,array,longtable,multirow,tabularx,makecell}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc,
+                fit,trees,calc,backgrounds,matrix}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage{libertinust1math}
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlist{topsep=4pt,itemsep=2pt,parsep=0pt}
+\setlist[enumerate]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ---- Colours ----
+\definecolor{myblue}{RGB}{0,51,102}
+\definecolor{mygreen}{RGB}{0,102,51}
+\definecolor{myorange}{RGB}{180,80,0}
+\definecolor{mypurple}{RGB}{120,0,120}
+\definecolor{myred}{RGB}{150,30,30}
+\definecolor{darkgray}{RGB}{50,50,50}
+\definecolor{mediumgray}{RGB}{110,110,110}
+\definecolor{lightgray}{RGB}{245,247,250}
+\definecolor{verylightblue}{RGB}{235,242,250}
+\definecolor{verylightgreen}{RGB}{235,247,240}
+\definecolor{verylightorange}{RGB}{252,242,232}
+
+% ---- Headers & Footers ----
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\bfseries\color{myblue} Probability Theory}
+\fancyhead[R]{\small\itshape Comprehensive Textbook}
+\fancyfoot[C]{\small\thepage}
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyhead[L]{\small\bfseries\color{myblue} Probability Theory}%
+    \fancyhead[R]{\small\itshape Comprehensive Textbook}%
+    \fancyfoot[C]{\small\thepage}%
+}
+
+% ---- Chapter & Section Formatting ----
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{myblue}}
+  {\chaptertitlename\ \thechapter}{12pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-20pt}{30pt}
+\titleformat{\section}
+  {\Large\bfseries\color{myblue}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\large\bfseries\color{mygreen}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{myorange}}{\thesubsubsection}{1em}{}
+
+% ---- Theorem Styles ----
+\newtheoremstyle{mytheorem}%
+  {10pt}{10pt}{\itshape}{}{\bfseries\color{myblue}}{.}{0.6em}{}
+\newtheoremstyle{mydefinition}%
+  {10pt}{10pt}{\normalfont}{}{\bfseries\color{mygreen}}{.}{0.6em}{}
+\newtheoremstyle{myremark}%
+  {10pt}{10pt}{\normalfont}{}{\bfseries\color{myorange}}{.}{0.6em}{}
+
+\theoremstyle{mytheorem}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{mydefinition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{myremark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{insight}[theorem]{Insight}
+
+% ---- Custom Environments ----
+\newenvironment{exercise}[1]{%
+  \par\medskip\noindent\textbf{\color{myblue}Exercise (#1)}\par\smallskip
+}{%
+  \par\smallskip
+}
+
+\newenvironment{solution}{%
+  \par\noindent\textbf{\color{mygreen}Solution (Full Workings):}\par\smallskip
+}{%
+  \par\bigskip
+}
+
+\newenvironment{worked}{%
+  \par\medskip\noindent\textbf{\color{myorange}Worked Example:}\par\smallskip
+}{%
+  \par\medskip
+}
+
+% ---- Mathematical Notation ----
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\supp}{supp}
+\newcommand{\given}{\,\middle|\,}
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}
+
+% ---- Hyperlinks ----
+\usepackage[colorlinks=true,linkcolor=myblue,citecolor=mygreen,
+            urlcolor=myorange,bookmarks=true,bookmarksnumbered=true,
+            pdfstartview=FitH]{hyperref}
+\usepackage{bookmark}
+\hypersetup{
+  pdftitle={Probability Theory: A Comprehensive Textbook},
+  pdfauthor={Jean Baptiste Habanabakize},
+  pdfsubject={Probability Theory},
+  pdfkeywords={probability, statistics, data science, machine learning,
+               Bayes theorem, conditional probability, random variables}
+}
+
+% ================================================================
+\begin{document}
+% ================================================================
+
+% ---- Title Page ----
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+{\Large\bfseries ACADEMIC TEXTBOOK SERIES}
+\vspace{1.5cm}
+{\Huge\bfseries\color{myblue} PROBABILITY THEORY}
+\vspace{0.5cm}
+{\Large\bfseries A Comprehensive Textbook}
+\vspace{0.8cm}
+{\large From Fundamental Concepts to Advanced Applications in Statistics, Data Science, and Machine Learning}
+\vspace{1.2cm}
+\begin{tikzpicture}
+  \draw[myblue,line width=1.5pt] (0,0) -- (10,0);
+\end{tikzpicture}
+\vspace{1.2cm}
+{\large \textit{Theory, Derivations, Worked Examples,\\ Applications, Exercises, and Complete Solutions}}
+\vfill
+{\Large \textbf{Jean Baptiste Habanabakize}}
+\vspace{0.3cm}
+{\large Data Analytics Curriculum}
+\vspace{0.8cm}
+{\large \today}
+\vfill
+\begin{minipage}{0.78\textwidth}
+\centering\small
+\textit{``Probability provides a mathematical language for reasoning under uncertainty.''}
+\end{minipage}
+\end{titlepage}
+
+% ---- Preface ----
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+Probability theory is the mathematical framework used to describe, quantify, and analyse uncertainty. It provides the foundation for statistical inference, stochastic modelling, risk analysis, machine learning, artificial intelligence, finance, engineering, medicine, and many other areas of science and technology.
+
+This textbook is designed to develop probability from first principles and progressively lead the reader toward more advanced concepts. Particular attention is given to mathematical reasoning, intuitive interpretation, worked examples, and practical applications.
+
+Throughout the book, probability is connected to realistic problems from education, medicine, quality control, finance, reliability engineering, and data science. A unified example based on the \textit{Data Hills Academy} student cohort is used in several chapters to demonstrate how probability concepts can be interpreted using realistic data.
+
+The book follows a progressive learning structure:
+\begin{enumerate}
+    \item Fundamental concepts and terminology
+    \item Sample spaces and events
+    \item Counting techniques
+    \item Probability axioms
+    \item Relationships between events
+    \item Fundamental probability rules
+    \item Conditional probability
+    \item The law of total probability
+    \item Bayes' theorem
+    \item Random variables
+    \item Probability distributions
+    \item Expectation and variance
+    \item Limit theorems
+    \item Applications to statistics and machine learning
+\end{enumerate}
+Each major topic contains definitions, explanations, mathematical results, examples, applications, exercises, and solutions.
+
+The objective is not simply to memorise formulas, but to understand \textbf{why} the formulas work, \textbf{when} they should be used, and \textbf{how} they can be applied to real-world problems.
+
+\vspace{0.5cm}
+\begin{flushright}
+\textit{Jean Baptiste Habanabakize}
+\end{flushright}
+
+% ---- Table of Contents ----
+\tableofcontents
+\newpage
+
+% ============================================================
+\part{FOUNDATIONS OF PROBABILITY}
+% ============================================================
+
+%===========================================================
+\chapter{The Landscape of Probability}
+%===========================================================
+
+\section{What is Probability?}
+Probability is a numerical measure of the likelihood that an event will occur. It is expressed as a number between 0 and 1, where 0 indicates impossibility and 1 indicates certainty. The study of probability provides the mathematical foundation for dealing with uncertainty, randomness, and risk.
+
+\begin{definition}[Classical Probability]
+Let $\Omega$ be a finite sample space in which all outcomes are equally likely. For an event $A \subseteq \Omega$, the probability of $A$ is
+\[
+\Prob(A) = \frac{|A|}{|\Omega|}.
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Coin Toss:}
+Suppose we toss a fair coin. The sample space is $\Omega = \{H, T\}$. The event $A = \{\text{heads}\}$ has size $|A| = 1$, and $|\Omega| = 2$. Therefore:
+\[
+\Prob(A) = \frac{|A|}{|\Omega|} = \frac{1}{2} = 0.5.
+\]
+So there is a 50\% chance of getting heads.
+\end{worked}
+
+\subsection{Interpretations of Probability}
+\begin{enumerate}
+    \item \textbf{Classical (theoretical):} Based on symmetry and equally likely outcomes (e.g., coin tosses, dice).
+    \item \textbf{Frequentist (empirical):} Based on long-run frequencies (e.g., historical data on product defects).
+    \item \textbf{Subjective:} Based on personal belief or expert judgment (e.g., probability of a political candidate winning).
+\end{enumerate}
+In this book, we will primarily work with the frequentist interpretation, since it is most relevant in data analytics and real-world applications.
+
+\section{The Sample Space and Events}
+Every random experiment has a set of possible outcomes.
+
+\begin{definition}[Sample Space]
+The sample space $\Omega$ is the set of all possible outcomes of a random experiment.
+\end{definition}
+
+\begin{definition}[Event]
+An event $A$ is a subset of $\Omega$. We say that $A$ occurs if the outcome of the experiment belongs to $A$.
+\end{definition}
+
+\begin{worked}
+\textbf{Rolling a Die:}
+\begin{itemize}
+    \item $\Omega = \{1,2,3,4,5,6\}$.
+    \item Event $A = \{\text{even number}\} = \{2,4,6\}$.
+    \item $|A| = 3$, $|\Omega| = 6$.
+    \item $\Prob(A) = \frac{3}{6} = 0.5$.
+\end{itemize}
+So the probability of rolling an even number is 50\%.
+\end{worked}
+
+\section{Introducing Our Unified Example: Data Hills Academy}
+Throughout this book, we will use a single, realistic dataset to illustrate every concept. This approach ensures continuity and helps you see how different probability rules connect.
+
+Before we dive into the numbers, we must define two essential operations on events: \textbf{AND} (intersection) and \textbf{OR} (union).
+
+\begin{definition}[Intersection (AND)]
+The intersection of two events $A$ and $B$, denoted $A \cap B$, is the event that \textbf{both} $A$ and $B$ occur simultaneously.
+\[
+\Prob(A \cap B) \quad\text{is read as ``the probability of $A$ AND $B$''}.
+\]
+\end{definition}
+
+\begin{definition}[Union (OR)]
+The union of two events $A$ and $B$, denoted $A \cup B$, is the event that \textbf{at least one} of $A$ or $B$ occurs. This includes the possibility that \textbf{both} $A$ and $B$ occur.
+\[
+\Prob(A \cup B) \quad\text{is read as ``the probability of $A$ OR $B$''}.
+\]
+\end{definition}
+
+We now present our dataset.
+
+\begin{quote}
+\noindent\textbf{Data Hills Academy – Student Cohort of 1000}
+\begin{itemize}
+    \item 600 boys (60\%), 400 girls (40\%).
+    \item Overall: 800 passed (80\%), 200 failed (20\%).
+    \item Gender breakdown:
+    \begin{itemize}
+        \item Boys: 450 passed, 150 failed.
+        \item Girls: 350 passed, 50 failed.
+    \end{itemize}
+\end{itemize}
+\end{quote}
+
+To make the relationships clear, we organise the data into a \textbf{contingency table}.
+
+\begin{table}[h]
+\centering
+\caption{Contingency Table for Data Hills Academy (frequencies)}
+\begin{tabular}{l|cc|c}
+ & \textbf{Pass} & \textbf{Fail} & \textbf{Total} \\
+\hline
+\textbf{Boy} & 450 & 150 & 600 \\
+\textbf{Girl} & 350 & 50 & 400 \\
+\hline
+\textbf{Total} & 800 & 200 & 1000
+\end{tabular}
+\end{table}
+
+We define the experiment as selecting one student uniformly at random from the 1,000 students in the cohort. Under this finite probability model, the observed proportions determine the corresponding probabilities.
+
+\subsection*{Probability Types: A Complete Breakdown}
+
+\subsubsection*{1. Marginal Probabilities (Single Events)}
+These are the probabilities of individual events without conditioning on anything else.
+
+\[
+\begin{aligned}
+\color{myblue} \Prob(\text{Boy}) &= \frac{600}{1000} = 0.60 \quad\text{(60\% are boys)} \\[4pt]
+\color{myblue} \Prob(\text{Girl}) &= \frac{400}{1000} = 0.40 \quad\text{(40\% are girls)} \\[4pt]
+\color{myblue} \Prob(\text{Pass}) &= \frac{800}{1000} = 0.80 \quad\text{(80\% passed)} \\[4pt]
+\color{myblue} \Prob(\text{Fail}) &= \frac{200}{1000} = 0.20 \quad\text{(20\% failed)}
+\end{aligned}
+\]
+
+\subsubsection*{2. Joint Probabilities (AND – Intersection)}
+These are the probabilities that \textbf{both events happen together}.
+
+\[
+\begin{aligned}
+\color{mygreen} \Prob(\text{Boy} \cap \text{Pass}) &= \frac{450}{1000} = 0.45
+    \quad\text{Probability of a boy AND passed.} \\[4pt]
+\color{mygreen} \Prob(\text{Boy} \cap \text{Fail}) &= \frac{150}{1000} = 0.15
+    \quad\text{Probability of a boy AND failed.} \\[4pt]
+\color{mygreen} \Prob(\text{Girl} \cap \text{Pass}) &= \frac{350}{1000} = 0.35
+    \quad\text{Probability of a girl AND passed.} \\[4pt]
+\color{mygreen} \Prob(\text{Girl} \cap \text{Fail}) &= \frac{50}{1000} = 0.05
+    \quad\text{Probability of a girl AND failed.}
+\end{aligned}
+\]
+
+**Check:** $0.45 + 0.15 + 0.35 + 0.05 = 1.00$, confirming all possibilities are covered.
+
+\subsubsection*{3. Union Probabilities (OR)}
+Using the addition rule $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$:
+
+\[
+\begin{aligned}
+\color{mypurple} \Prob(\text{Boy} \cup \text{Pass})
+&= 0.60 + 0.80 - 0.45 = 0.95 \\[4pt]
+\color{mypurple} \Prob(\text{Girl} \cup \text{Pass})
+&= 0.40 + 0.80 - 0.35 = 0.85 \\[4pt]
+\color{mypurple} \Prob(\text{Boy} \cup \text{Fail})
+&= 0.60 + 0.20 - 0.15 = 0.65 \\[4pt]
+\color{mypurple} \Prob(\text{Girl} \cup \text{Fail})
+&= 0.40 + 0.20 - 0.05 = 0.55
+\end{aligned}
+\]
+
+\subsubsection*{4. Conditional Probabilities (Given)}
+These are probabilities calculated by restricting the sample space.
+
+**Given gender → pass/fail:**
+\[
+\begin{aligned}
+\color{myorange} \Prob(\text{Pass} \mid \text{Boy})
+&= \frac{0.45}{0.60} = 0.75 = 75\% \\[4pt]
+\color{myorange} \Prob(\text{Fail} \mid \text{Boy})
+&= \frac{0.15}{0.60} = 0.25 = 25\% \\[4pt]
+\color{myorange} \Prob(\text{Pass} \mid \text{Girl})
+&= \frac{0.35}{0.40} = 0.875 = 87.5\% \\[4pt]
+\color{myorange} \Prob(\text{Fail} \mid \text{Girl})
+&= \frac{0.05}{0.40} = 0.125 = 12.5\%
+\end{aligned}
+\]
+
+**Given pass/fail → gender:**
+\[
+\begin{aligned}
+\color{myred} \Prob(\text{Boy} \mid \text{Pass})
+&= \frac{0.45}{0.80} = 0.5625 = 56.25\% \\[4pt]
+\color{myred} \Prob(\text{Girl} \mid \text{Pass})
+&= \frac{0.35}{0.80} = 0.4375 = 43.75\% \\[4pt]
+\color{myred} \Prob(\text{Boy} \mid \text{Fail})
+&= \frac{0.15}{0.20} = 0.75 = 75\% \\[4pt]
+\color{myred} \Prob(\text{Girl} \mid \text{Fail})
+&= \frac{0.05}{0.20} = 0.25 = 25\%
+\end{aligned}
+\]
+
+\subsubsection*{5. Bayes' Theorem (Posterior)}
+Bayes' theorem updates probabilities given new evidence. For example, the probability that a student is a girl given that they passed:
+
+\[
+\begin{aligned}
+\Prob(\text{Girl} \mid \text{Pass})
+&= \frac{\Prob(\text{Pass} \mid \text{Girl}) \cdot \Prob(\text{Girl})}{\Prob(\text{Pass})} \\[6pt]
+&= \frac{0.875 \times 0.40}{0.80} = \frac{0.35}{0.80} = 0.4375 = 43.75\%
+\end{aligned}
+\]
+
+Other Bayes results:
+\[
+\begin{aligned}
+\color{myred} \Prob(\text{Boy} \mid \text{Pass}) &= 56.25\% \quad
+\Prob(\text{Girl} \mid \text{Pass}) = 43.75\% \\[4pt]
+\color{myred} \Prob(\text{Boy} \mid \text{Fail}) &= 75\% \quad
+\Prob(\text{Girl} \mid \text{Fail}) = 25\%
+\end{aligned}
+\]
+
+\subsection*{Summary Table of All Probability Types}
+\begin{table}[h]
+\centering
+\caption{Summary of Probability Types for Data Hills Academy}
+\begin{tabular}{l|l|l}
+\toprule
+\textbf{Type} & \textbf{Notation} & \textbf{Data Hills Example} \\
+\midrule
+\color{myblue} Marginal & $\Prob(A)$ & $\Prob(\text{Boy}) = 0.60$ \\
+\color{mygreen} Joint (AND) & $\Prob(A \cap B)$ & $\Prob(\text{Boy} \cap \text{Pass}) = 0.45$ \\
+\color{mypurple} Union (OR) & $\Prob(A \cup B)$ & $\Prob(\text{Boy} \cup \text{Pass}) = 0.95$ \\
+\color{myorange} Conditional & $\Prob(A \mid B)$ & $\Prob(\text{Pass} \mid \text{Girl}) = 0.875$ \\
+\color{myred} Bayes (Posterior) & $\Prob(A \mid B)$ & $\Prob(\text{Girl} \mid \text{Pass}) = 0.4375$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Key Event Relationships}
+Using the Data Hills data, we can illustrate three fundamental event relationships:
+
+\begin{itemize}
+    \item \textbf{Mutually Exclusive (Disjoint):} Events that cannot occur together.  
+    e.g., “Boy” and “Girl” have $\Prob(\text{Boy} \cap \text{Girl}) = 0$.
+    \item \textbf{Collectively Exhaustive:} Events whose union covers the entire sample space.  
+    e.g., $\Prob(\text{Boy} \cup \text{Girl}) = 1$.
+    \item \textbf{Independent:} Events where $\Prob(A \cap B) = \Prob(A)\Prob(B)$.  
+    e.g., Check if “Girl” and “Pass” are independent:  
+    $\Prob(\text{Girl} \cap \text{Pass}) = 0.35$, while $\Prob(\text{Girl})\Prob(\text{Pass}) = 0.40 \times 0.80 = 0.32$.  
+    Since $0.35 \neq 0.32$, they are \textbf{dependent}. Girls have a higher pass rate.
+\end{itemize}
+
+These concepts will be explored further in Chapter 4.
+
+\section{Real-World Application: Quality Control}
+In a factory producing 10,000 units daily, 150 are defective. If we select one unit at random, the probability it is defective is:
+\[
+\Prob(\text{Defective}) = \frac{150}{10000} = 0.015.
+\]
+This empirical probability helps management decide whether to recalibrate machines.
+
+\begin{worked}
+\textbf{Quality Control Calculation:}
+Total units = 10,000. Defective units = 150.
+\[
+\Prob(\text{Defective}) = \frac{\text{Number of defective units}}{\text{Total units}} = \frac{150}{10000} = 0.015.
+\]
+As a percentage: $0.015 \times 100 = 1.5\%$. So the defect rate is 1.5\%.
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Basic Probability from Data Hills}
+Using the Data Hills Academy data:
+\begin{enumerate}[label=(\alph*)]
+    \item What is $\Prob(\text{Girl})$?
+    \item What is $\Prob(\text{Boy} \cap \text{Pass})$?
+    \item What is $\Prob(\text{Fail})$?
+\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[label=(\alph*)]
+    \item $\Prob(\text{Girl}) = \frac{400}{1000} = 0.40$.
+    \item $\Prob(\text{Boy} \cap \text{Pass}) = \frac{450}{1000} = 0.45$.
+    \item $\Prob(\text{Fail}) = \frac{200}{1000} = 0.20$.
+\end{enumerate}
+\end{solution}
+
+%===========================================================
+\chapter{Counting Techniques}
+%===========================================================
+
+\section{Introduction}
+Before developing probability theory further, we need tools to count the number of outcomes in sample spaces and events. Counting techniques form the foundation of classical probability.
+
+\section{The Fundamental Counting Principle}
+If one event can occur in $m$ ways and a second independent event can occur in $n$ ways, then the two events together can occur in $m \times n$ ways.
+
+\begin{worked}
+\textbf{Simple Example:}
+A restaurant offers 3 starters, 4 main courses, and 2 desserts. How many different full meals are possible?
+\[
+3 \times 4 \times 2 = 24 \text{ meals}.
+\]
+\end{worked}
+
+\section{Factorials}
+The product of all positive integers up to $n$ is called $n$ factorial:
+\[
+n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1.
+\]
+By definition, $0! = 1$.
+
+\begin{worked}
+\[
+5! = 5 \times 4 \times 3 \times 2 \times 1 = 120.
+\]
+\end{worked}
+
+\section{Permutations}
+A permutation is an ordered arrangement of items. The number of ways to arrange $r$ items from a set of $n$ distinct items is:
+\[
+{}^nP_r = \frac{n!}{(n-r)!}.
+\]
+
+\begin{worked}
+\textbf{Example:}
+How many ways can we arrange 3 books from a shelf of 5 different books?
+\[
+{}^5P_3 = \frac{5!}{(5-3)!} = \frac{120}{2!} = \frac{120}{2} = 60.
+\]
+\end{worked}
+
+\section{Combinations}
+A combination is an unordered selection of items. The number of ways to choose $r$ items from a set of $n$ distinct items is:
+\[
+\binom{n}{r} = \frac{n!}{r!(n-r)!}.
+\]
+
+\begin{worked}
+\textbf{Example:}
+How many ways can we choose 3 students from a class of 10?
+\[
+\binom{10}{3} = \frac{10!}{3!(10-3)!} = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = 120.
+\]
+\end{worked}
+
+\section{Sampling with and without Replacement}
+\begin{itemize}
+    \item \textbf{With replacement:} Each selection is independent, and the same item can be chosen multiple times.
+    \item \textbf{Without replacement:} Each item can be chosen at most once.
+\end{itemize}
+
+\begin{worked}
+\textbf{Example:}
+A bag contains 5 red and 3 blue balls. We draw 2 balls.
+\begin{itemize}
+    \item \textbf{With replacement:} $8 \times 8 = 64$ possible ordered outcomes.
+    \item \textbf{Without replacement:} $8 \times 7 = 56$ possible ordered outcomes.
+\end{itemize}
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Counting}
+\begin{enumerate}[label=(\alph*)]
+    \item How many ways can 4 students be arranged in a row?
+    \item How many ways can we choose 2 cards from a standard 52-card deck?
+    \item A PIN code has 4 digits. How many possible PINs are there if digits can repeat?
+\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[label=(\alph*)]
+    \item $4! = 4 \times 3 \times 2 \times 1 = 24$ ways.
+    \item $\binom{52}{2} = \frac{52 \times 51}{2} = 1326$ ways.
+    \item $10 \times 10 \times 10 \times 10 = 10,000$ possible PINs.
+\end{enumerate}
+\end{solution}
+
+%===========================================================
+\chapter{Axiomatic Probability}
+%===========================================================
+
+\section{Probability Spaces}
+In modern probability theory, we formalise the concept of a probability space.
+
+\begin{definition}[Probability Space]
+A probability space is a triple $(\Omega, \mathcal{F}, \Prob)$ where:
+\begin{itemize}
+    \item $\Omega$ is the sample space (set of all possible outcomes).
+    \item $\mathcal{F}$ is a $\sigma$-algebra of events (a collection of subsets of $\Omega$ satisfying certain properties).
+    \item $\Prob$ is a probability measure that assigns probabilities to events in $\mathcal{F}$.
+\end{itemize}
+\end{definition}
+
+\section{Kolmogorov's Axioms}
+The modern theory of probability is built on three axioms, introduced by Andrey Kolmogorov in 1933.
+
+\begin{definition}[Kolmogorov Axioms]
+Let $\Omega$ be a sample space and let $\Prob$ be a probability measure defined on the events of $\Omega$. Then:
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+    \item \textbf{Non-negativity:} For every event $A$,
+    \[
+        \Prob(A) \ge 0.
+    \]
+    \item \textbf{Normalisation:} The probability of the entire sample space is
+    \[
+        \Prob(\Omega) = 1.
+    \]
+    \item \textbf{Countable additivity:} If $A_1, A_2, \ldots$ are pairwise disjoint events, then
+    \[
+        \Prob\left(\bigcup_{i=1}^{\infty} A_i\right)
+        =
+        \sum_{i=1}^{\infty} \Prob(A_i).
+    \]
+\end{enumerate}
+\end{definition}
+
+\begin{worked}
+\textbf{Verifying the Axioms with Data Hills:}
+\begin{enumerate}
+    \item Non-negativity: All probabilities from the data are between 0 and 1.
+    \item Normalisation: $\Prob(\text{Boy}) + \Prob(\text{Girl}) = 0.60 + 0.40 = 1.00$.
+    \item Additivity: The events "Boy" and "Girl" are disjoint, and their union is the whole sample space:
+    \[
+    \Prob(\text{Boy} \cup \text{Girl}) = \Prob(\text{Boy}) + \Prob(\text{Girl}) = 0.60 + 0.40 = 1.00.
+    \]
+\end{enumerate}
+\end{worked}
+
+\begin{insight}
+The three axioms are the starting point of probability theory. Many familiar rules—including the complement rule, addition rule, and several properties of conditional probability—can be derived from these basic principles.
+\end{insight}
+
+%===========================================================
+\chapter{Relationships Between Events}
+%===========================================================
+
+\section{Mutually Exclusive Events}
+\begin{definition}[Mutually Exclusive]
+Two events $A$ and $B$ are mutually exclusive (disjoint) if they cannot occur simultaneously: $A \cap B = \varnothing$.
+\end{definition}
+
+As noted in Chapter 1, “Boy” and “Girl” are mutually exclusive, so $\Prob(\text{Boy} \cap \text{Girl}) = 0$.
+
+\section{Independent Events}
+\begin{definition}[Independent]
+Events $A$ and $B$ are independent if the occurrence of one does not affect the probability of the other:
+\[
+\Prob(A \cap B) = \Prob(A) \Prob(B).
+\]
+\end{definition}
+
+In Chapter 1 we tested “Girl” and “Pass” and found they are dependent because $\Prob(\text{Girl} \cap \text{Pass}) \neq \Prob(\text{Girl})\Prob(\text{Pass})$.
+
+\begin{insight}
+Independence is a stronger condition than mutual exclusivity. If two events are mutually exclusive and both have positive probability, they cannot be independent because knowing $A$ occurred tells you $B$ did not.
+\end{insight}
+
+\section{Pairwise vs. Mutual Independence}
+\begin{definition}[Pairwise Independence]
+Events $A_1, A_2, \ldots, A_n$ are pairwise independent if every pair satisfies:
+\[
+\Prob(A_i \cap A_j) = \Prob(A_i) \Prob(A_j) \quad \text{for all } i \neq j.
+\]
+\end{definition}
+
+\begin{definition}[Mutual Independence]
+Events $A_1, A_2, \ldots, A_n$ are mutually independent if for every subset $\{i_1, \ldots, i_k\}$,
+\[
+\Prob\left(\bigcap_{j=1}^k A_{i_j}\right) = \prod_{j=1}^k \Prob(A_{i_j}).
+\]
+\end{definition}
+
+\begin{insight}
+Mutual independence is stronger than pairwise independence. Pairwise independence does not necessarily imply mutual independence.
+\end{insight}
+
+\section{Collectively Exhaustive Events}
+\begin{definition}[Collectively Exhaustive]
+A collection of events $A_1, \ldots, A_n$ is collectively exhaustive if at least one of them must occur, i.e., $\bigcup_{i=1}^n A_i = \Omega$.
+\end{definition}
+In Data Hills, “Boy” and “Girl” are collectively exhaustive, as are “Pass” and “Fail”.
+
+\section{Complement of an Event}
+The complement of $A$, denoted $A^c$, is the event that $A$ does not occur.
+
+\begin{worked}
+\textbf{Complement in Data Hills:}
+If $A = \text{Pass}$, then $A^c = \text{Fail}$.
+\[
+\Prob(\text{Pass}) = 0.80 \implies \Prob(\text{Fail}) = 1 - 0.80 = 0.20.
+\]
+This matches the data: 200 out of 1000 students failed.
+\end{worked}
+
+\section{Real-World Application: Credit Risk}
+In banking, a loan can be "fully paid" or "defaulted" — these are mutually exclusive. The probability of default might be dependent on other factors like employment status.
+
+\section{Exercises}
+\begin{exercise}{Independence Test}
+Using Data Hills, check whether "Girl" and "Pass" are independent.
+\end{exercise}
+\begin{solution}
+We need to verify if $\Prob(\text{Girl} \cap \text{Pass}) = \Prob(\text{Girl})\Prob(\text{Pass})$.
+
+\textbf{Step 1:} From the data:
+\[
+\Prob(\text{Girl} \cap \text{Pass}) = \frac{350}{1000} = 0.35.
+\]
+
+\textbf{Step 2:} Compute individual probabilities:
+\[
+\Prob(\text{Girl}) = \frac{400}{1000} = 0.40, \quad
+\Prob(\text{Pass}) = \frac{800}{1000} = 0.80.
+\]
+
+\textbf{Step 3:} Multiply:
+\[
+\Prob(\text{Girl}) \times \Prob(\text{Pass}) = 0.40 \times 0.80 = 0.32.
+\]
+
+\textbf{Step 4:} Compare: $0.35 \neq 0.32$. Since they are not equal, the events are \textbf{dependent}. Girls have a higher pass rate than expected under independence.
+\end{solution}
+
+%===========================================================
+\chapter{Fundamental Probability Rules}
+%===========================================================
+
+\section{The Complement Rule}
+\begin{theorem}[Complement Rule]
+For any event $A$, $\Prob(A^c) = 1 - \Prob(A)$.
+\end{theorem}
+
+\begin{worked}
+\textbf{Data Hills Example:}
+Let $A = \text{Pass}$. Then $A^c = \text{Fail}$.
+\[
+\Prob(\text{Pass}) = 0.80 \implies \Prob(\text{Fail}) = 1 - 0.80 = 0.20.
+\]
+This matches the data: 200 out of 1000 students failed.
+\end{worked}
+
+\section{The Addition Rule}
+\begin{theorem}[General Addition Rule]
+For any two events $A$ and $B$,
+\[
+\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B).
+\]
+If $A$ and $B$ are mutually exclusive, $\Prob(A \cap B) = 0$, so $\Prob(A \cup B) = \Prob(A) + \Prob(B)$.
+\end{theorem}
+
+\begin{worked}
+\textbf{Data Hills Example: What is $\Prob(\text{Boy} \cup \text{Pass})$?}
+
+\textbf{Step 1:} Identify the required probabilities:
+\[
+\Prob(\text{Boy}) = 0.60, \quad \Prob(\text{Pass}) = 0.80, \quad \Prob(\text{Boy} \cap \text{Pass}) = 0.45.
+\]
+
+\textbf{Step 2:} Apply the addition rule:
+\begin{align*}
+\Prob(\text{Boy} \cup \text{Pass})
+&= \Prob(\text{Boy}) + \Prob(\text{Pass}) - \Prob(\text{Boy} \cap \text{Pass}) \\
+&= 0.60 + 0.80 - 0.45 \\
+&= 0.95.
+\end{align*}
+
+\textbf{Step 3:} Interpret: There is a 95\% chance that a randomly selected student is either a boy, passed, or both.
+\end{worked}
+
+\section{The Multiplication Rule}
+\begin{theorem}[General Multiplication Rule]
+For any events $A$ and $B$,
+\[
+\Prob(A \cap B) = \Prob(A) \cdot \Prob(B|A) = \Prob(B) \cdot \Prob(A|B).
+\]
+If $A$ and $B$ are independent, $\Prob(B|A) = \Prob(B)$, so $\Prob(A \cap B) = \Prob(A)\Prob(B)$.
+\end{theorem}
+
+\begin{worked}
+\textbf{Data Hills Example (Without Replacement):}
+Two students are selected randomly without replacement. What is the probability that both are girls?
+
+\textbf{Step 1:} Probability the first is a girl:
+\[
+\Prob(\text{1st Girl}) = \frac{400}{1000} = 0.40.
+\]
+
+\textbf{Step 2:} After removing one girl, there are 399 girls left out of 999 students:
+\[
+\Prob(\text{2nd Girl} \mid \text{1st Girl}) = \frac{399}{999} \approx 0.3994.
+\]
+
+\textbf{Step 3:} Apply the multiplication rule:
+\[
+\Prob(\text{Both Girls}) = \Prob(\text{1st Girl}) \times \Prob(\text{2nd Girl} \mid \text{1st Girl})
+= 0.40 \times 0.3994 \approx 0.1598.
+\]
+
+\textbf{Step 4:} Interpret: There is approximately a 16\% chance that both selected students are girls.
+\end{worked}
+
+\section{Real-World Application: System Reliability}
+An aircraft has two independent engines, each with reliability $0.99$. The probability that at least one works is:
+\[
+\Prob(\text{at least one}) = 1 - \Prob(\text{both fail}) = 1 - (0.01)^2 = 0.9999.
+\]
+
+\begin{worked}
+\textbf{System Reliability Calculation:}
+Engine reliability = $0.99$, so failure probability = $1 - 0.99 = 0.01$.
+\[
+\Prob(\text{Engine 1 fails}) = 0.01, \quad \Prob(\text{Engine 2 fails}) = 0.01.
+\]
+Since the engines are independent:
+\[
+\Prob(\text{Both fail}) = 0.01 \times 0.01 = 0.0001.
+\]
+Therefore:
+\[
+\Prob(\text{At least one works}) = 1 - 0.0001 = 0.9999 = 99.99\%.
+\]
+Redundancy dramatically reduces the probability of total system failure.
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Addition Rule}
+At Data Hills, what is $\Prob(\text{Boy} \cup \text{Pass})$?
+\end{exercise}
+\begin{solution}
+Using the general addition rule:
+\begin{align*}
+\Prob(\text{Boy}\cup\text{Pass})
+&= \Prob(\text{Boy}) + \Prob(\text{Pass}) - \Prob(\text{Boy}\cap\text{Pass}) \\
+&= 0.60 + 0.80 - 0.45 \\
+&= 0.95.
+\end{align*}
+Thus $\boxed{\Prob(\text{Boy}\cup\text{Pass}) = 0.95}$.
+\end{solution}
+
+\begin{exercise}{Multiplication Rule}
+Two students are selected randomly without replacement. What is the probability that both are girls?
+\end{exercise}
+\begin{solution}
+\[
+\Prob(\text{1st Girl}) = \frac{400}{1000} = 0.40.
+\]
+\[
+\Prob(\text{2nd Girl} \mid \text{1st Girl}) = \frac{399}{999} \approx 0.3994.
+\]
+\[
+\Prob(\text{both girls}) = 0.40 \times 0.3994 \approx 0.1598.
+\]
+\end{solution}
+
+%===========================================================
+\chapter{Visualising Probability}
+%===========================================================
+
+\section{Venn Diagrams}
+Venn diagrams are a powerful tool for visualising relationships between events.
+
+\begin{worked}
+\textbf{Venn Diagram for Data Hills:}
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+    % Sample space
+    \draw[thick, rounded corners] (-3.5,-2.5) rectangle (3.5,2.5);
+    \node[anchor=north west,font=\small] at (-3.4,2.4) {$\Omega$};
+    % Boy
+    \draw[thick, fill=verylightblue] (-1.2,0) circle (1.55);
+    % Pass
+    \draw[thick, fill=verylightgreen] (1.2,0) circle (1.55);
+    % Labels
+    \node at (-1.7,0.75) {\textbf{Boy only}};
+    \node at (0,0) {\textbf{Boy} $\cap$ \textbf{Pass}};
+    \node at (1.7,0.75) {\textbf{Pass only}};
+    \node at (-1.7,-0.75) {$0.15$};
+    \node at (0,-0.75) {$0.45$};
+    \node at (1.7,-0.75) {$0.35$};
+    \node at (0,-2.0) {\textbf{Neither:} $0.05$};
+\end{tikzpicture}
+\end{center}
+
+From the diagram:
+\begin{itemize}
+    \item Boy only: $0.60 - 0.45 = 0.15$ (boys who failed).
+    \item Pass only: $0.80 - 0.45 = 0.35$ (girls who passed).
+    \item Neither: $1.00 - (0.15 + 0.45 + 0.35) = 0.05$ (girls who failed).
+\end{itemize}
+\end{worked}
+
+\section{Tree Diagrams}
+Tree diagrams decompose sequential processes.
+
+\begin{worked}
+\textbf{Tree Diagram for Data Hills:}
+\begin{center}
+\begin{tikzpicture}[
+  level 1/.style={sibling distance=4cm, level distance=2.5cm},
+  level 2/.style={sibling distance=2cm, level distance=2.5cm},
+  font=\small
+]
+\node {Cohort}
+  child { node {Boy}
+    child { node {Pass} edge from parent node[left] {$0.75$} }
+    child { node {Fail} edge from parent node[right] {$0.25$} }
+    edge from parent node[above left] {$0.60$} }
+  child { node {Girl}
+    child { node {Pass} edge from parent node[left] {$0.875$} }
+    child { node {Fail} edge from parent node[right] {$0.125$} }
+    edge from parent node[above right] {$0.40$} };
+\end{tikzpicture}
+\end{center}
+
+From the tree:
+\begin{itemize}
+    \item Probability of selecting a boy who passed: $0.60 \times 0.75 = 0.45$.
+    \item Probability of selecting a girl who passed: $0.40 \times 0.875 = 0.35$.
+    \item Total pass probability: $0.45 + 0.35 = 0.80$.
+\end{itemize}
+\end{worked}
+
+%===========================================================
+\chapter{Conditional Probability}
+%===========================================================
+
+\section{Definition and Intuition}
+Conditional probability measures the chance of event $A$ given that event $B$ has occurred.
+
+\begin{definition}[Conditional Probability]
+\[
+\Prob(A \mid B) = \frac{\Prob(A \cap B)}{\Prob(B)},\quad \text{provided } \Prob(B) > 0.
+\]
+\end{definition}
+
+The calculations for Data Hills have already been shown in Chapter 1. We will now generalise the concept.
+
+\section{The Contingency Table (Probability Form)}
+\begin{table}[h]
+\centering
+\caption{Data Hills Academy Contingency Table (Probabilities)}
+\begin{tabular}{l|cc|c}
+ & Pass & Fail & Total \\
+\hline
+Boy & 0.45 & 0.15 & 0.60 \\
+Girl & 0.35 & 0.05 & 0.40 \\
+\hline
+Total & 0.80 & 0.20 & 1.00
+\end{tabular}
+\end{table}
+
+From this table, we can read all joint, marginal, and conditional probabilities.
+
+\section{Real-World Application: Medical Testing}
+Sensitivity = $\Prob(T^+ \mid D^+)$, Specificity = $\Prob(T^- \mid D^-)$.
+
+\begin{worked}
+\textbf{Medical Test Example:}
+A disease affects 1\% of the population. A test has 95\% sensitivity and 90\% specificity.
+
+\textbf{Step 1:} Identify known values:
+\[
+\Prob(D) = 0.01,\quad \Prob(T^+ \mid D) = 0.95,\quad \Prob(T^- \mid D^-) = 0.90.
+\]
+
+\textbf{Step 2:} Compute false positive rate:
+\[
+\Prob(T^+ \mid D^-) = 1 - 0.90 = 0.10.
+\]
+
+\textbf{Step 3:} The probability of a positive test is:
+\[
+\Prob(T^+) = \Prob(T^+ \mid D)\Prob(D) + \Prob(T^+ \mid D^-)\Prob(D^-)
+= 0.95 \times 0.01 + 0.10 \times 0.99 = 0.0095 + 0.099 = 0.1085.
+\]
+
+\textbf{Step 4:} Probability of disease given a positive test:
+\[
+\Prob(D \mid T^+) = \frac{0.95 \times 0.01}{0.1085} = \frac{0.0095}{0.1085} \approx 0.0876.
+\]
+Even with a positive test, there is only an 8.76\% chance of having the disease because the disease is rare.
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Conditional from Data Hills}
+Find $\Prob(\text{Fail} \mid \text{Boy})$ and $\Prob(\text{Boy} \mid \text{Pass})$.
+\end{exercise}
+\begin{solution}
+\textbf{For $\Prob(\text{Fail} \mid \text{Boy})$:}
+\[
+\Prob(\text{Fail} \cap \text{Boy}) = 0.15,\quad \Prob(\text{Boy}) = 0.60.
+\]
+\[
+\Prob(\text{Fail} \mid \text{Boy}) = \frac{0.15}{0.60} = 0.25 = 25\%.
+\]
+
+\textbf{For $\Prob(\text{Boy} \mid \text{Pass})$:}
+\[
+\Prob(\text{Boy} \cap \text{Pass}) = 0.45,\quad \Prob(\text{Pass}) = 0.80.
+\]
+\[
+\Prob(\text{Boy} \mid \text{Pass}) = \frac{0.45}{0.80} = 0.5625 = 56.25\%.
+\]
+\end{solution}
+
+%===========================================================
+\chapter{The Law of Total Probability}
+%===========================================================
+
+\section{Partitions}
+Before stating the law, we need the concept of a partition.
+
+\begin{definition}[Partition]
+A collection of events $A_1, \ldots, A_k$ forms a partition of $\Omega$ if:
+\begin{enumerate}
+    \item They are mutually exclusive: $A_i \cap A_j = \varnothing$ for $i \neq j$.
+    \item They are collectively exhaustive: $\bigcup_{i=1}^k A_i = \Omega$.
+\end{enumerate}
+\end{definition}
+
+\section{Statement and Derivation}
+If $A_1, \dots, A_k$ form a partition of $\Omega$, then for any event $B$:
+\[
+\Prob(B) = \sum_{i=1}^k \Prob(B \cap A_i) = \sum_{i=1}^k \Prob(B \mid A_i) \Prob(A_i).
+\]
+
+\begin{worked}
+\textbf{Data Hills Example:}
+At Data Hills, suppose 70\% are Day Scholars (85\% pass) and 30\% Boarders (65\% pass). Find overall pass rate.
+
+\textbf{Step 1:} Identify the partition:
+\[
+\Prob(D) = 0.70,\quad \Prob(B) = 0.30.
+\]
+
+\textbf{Step 2:} Identify conditional probabilities:
+\[
+\Prob(\text{Pass} \mid D) = 0.85,\quad \Prob(\text{Pass} \mid B) = 0.65.
+\]
+
+\textbf{Step 3:} Apply the law of total probability:
+\[
+\Prob(\text{Pass}) = \Prob(\text{Pass} \mid D)\Prob(D) + \Prob(\text{Pass} \mid B)\Prob(B)
+= 0.85 \times 0.70 + 0.65 \times 0.30 = 0.595 + 0.195 = 0.79.
+\]
+
+\textbf{Step 4:} Interpret: The overall pass rate is 79\%.
+\end{worked}
+
+\section{Real-World Application: Spam Filtering}
+Three filters handle posts with different flag rates. The overall spam rate is computed by averaging across filters.
+
+\begin{worked}
+\textbf{Spam Filter Example:}
+Filter A handles 50\% of posts (flags 1\% spam). Filter B handles 30\% (flags 5\% spam). Filter C handles 20\% (flags 10\% spam).
+
+\textbf{Step 1:} Set up:
+\[
+\Prob(A) = 0.50,\quad \Prob(B) = 0.30,\quad \Prob(C) = 0.20.
+\]
+\[
+\Prob(S \mid A) = 0.01,\quad \Prob(S \mid B) = 0.05,\quad \Prob(S \mid C) = 0.10.
+\]
+
+\textbf{Step 2:} Apply law of total probability:
+\[
+\Prob(S) = 0.01 \times 0.50 + 0.05 \times 0.30 + 0.10 \times 0.20
+= 0.005 + 0.015 + 0.020 = 0.04.
+\]
+
+\textbf{Step 3:} Interpret: The overall spam flagging rate is 4\%.
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Total Probability}
+At Data Hills, suppose 70\% are Day Scholars (85\% pass) and 30\% Boarders (65\% pass). Find overall pass rate.
+\end{exercise}
+\begin{solution}
+\[
+\Prob(\text{Pass}) = \Prob(\text{Pass} \mid D)\Prob(D) + \Prob(\text{Pass} \mid B)\Prob(B)
+= 0.85 \times 0.70 + 0.65 \times 0.30 = 0.595 + 0.195 = 0.79.
+\]
+The overall pass rate is 79\%.
+\end{solution}
+
+%===========================================================
+\chapter{Bayes' Theorem}
+%===========================================================
+
+\section{The Theorem}
+\begin{theorem}[Bayes' Theorem]
+\[
+\Prob(A \mid B) = \frac{\Prob(B \mid A) \Prob(A)}{\Prob(B)}.
+\]
+When $A_1, \dots, A_k$ partition $\Omega$,
+\[
+\Prob(A_j \mid B) = \frac{\Prob(B \mid A_j) \Prob(A_j)}{\sum_{i=1}^k \Prob(B \mid A_i) \Prob(A_i)}.
+\]
+\end{theorem}
+
+\section{Terminology}
+\begin{itemize}
+    \item $\Prob(A)$: \textbf{Prior} — initial belief before observing evidence $B$.
+    \item $\Prob(B \mid A)$: \textbf{Likelihood} — probability of observing evidence $B$ if hypothesis $A$ is true.
+    \item $\Prob(B)$: \textbf{Evidence} — total probability of observing evidence $B$.
+    \item $\Prob(A \mid B)$: \textbf{Posterior} — updated probability of hypothesis $A$ given evidence $B$.
+\end{itemize}
+
+The Data Hills Bayes examples were already worked in Chapter 1. We now present a new medical application.
+
+\section{Real-World Application: Medical Diagnosis}
+Given a positive test result, what is the probability the patient actually has the disease?
+
+\begin{worked}
+\textbf{Classic Medical Example:}
+Disease prevalence 1\%, sensitivity 95\%, false positive rate 5\%.
+
+\textbf{Step 1:} Identify priors and likelihoods:
+\[
+\Prob(D) = 0.01,\quad \Prob(D') = 0.99,
+\]
+\[
+\Prob(T^+ \mid D) = 0.95,\quad \Prob(T^+ \mid D') = 0.05.
+\]
+
+\textbf{Step 2:} Compute evidence using law of total probability:
+\[
+\Prob(T^+) = \Prob(T^+ \mid D)\Prob(D) + \Prob(T^+ \mid D')\Prob(D')
+= 0.95 \times 0.01 + 0.05 \times 0.99 = 0.0095 + 0.0495 = 0.059.
+\]
+
+\textbf{Step 3:} Apply Bayes' theorem:
+\[
+\Prob(D \mid T^+) = \frac{\Prob(T^+ \mid D) \Prob(D)}{\Prob(T^+)}
+= \frac{0.95 \times 0.01}{0.059} = \frac{0.0095}{0.059} \approx 0.161.
+\]
+
+\textbf{Step 4:} Interpret: Even with a positive test, there is only a 16.1\% chance of having the disease because the disease is rare.
+
+This example illustrates the importance of the base rate and the common \textbf{base-rate fallacy}, in which the prevalence of a condition is ignored when interpreting diagnostic evidence.
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Bayes – Classic Medical}
+Disease prevalence 1\%, sensitivity 95\%, false positive rate 5\%. Compute $\Prob(D \mid T^+)$.
+\end{exercise}
+\begin{solution}
+\[
+\Prob(T^+) = 0.95 \times 0.01 + 0.05 \times 0.99 = 0.0095 + 0.0495 = 0.059.
+\]
+\[
+\Prob(D \mid T^+) = \frac{0.95 \times 0.01}{0.059} = \frac{0.0095}{0.059} \approx 0.161.
+\]
+There is a 16.1\% chance of having the disease given a positive test.
+\end{solution}
+
+%===========================================================
+\part{RANDOM VARIABLES AND DISTRIBUTIONS}
+%===========================================================
+
+%===========================================================
+\chapter{Random Variables}
+%===========================================================
+
+\section{Definition and Motivation}
+Often, we are not interested in the raw outcomes of a random experiment, but rather in some numerical function of those outcomes.
+
+\begin{definition}[Random Variable]
+A random variable $X$ is a function that assigns a real number to each outcome in the sample space:
+\[
+X: \Omega \to \mathbb{R}.
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Coin Toss Example:}
+Let $\Omega = \{H, T\}$. Define $X$ as the number of heads:
+\[
+X(H) = 1, \quad X(T) = 0.
+\]
+This is a random variable.
+\end{worked}
+
+\section{Discrete Random Variables}
+A random variable is discrete if it takes a finite or countably infinite set of values.
+
+\begin{definition}[Probability Mass Function (PMF)]
+For a discrete random variable $X$, the PMF is:
+\[
+p_X(x) = \Prob(X = x).
+\]
+Properties:
+\begin{enumerate}
+    \item $p_X(x) \ge 0$ for all $x$.
+    \item $\sum_{x} p_X(x) = 1$.
+\end{enumerate}
+\end{definition}
+
+\begin{worked}
+\textbf{Data Hills Example:}
+Define $X$ as the number of students selected who are girls when we select 2 students without replacement.
+$X$ can take values 0, 1, 2.
+The PMF is:
+\[
+p_X(0) = \frac{600}{1000} \times \frac{599}{999} \approx 0.3598,
+\]
+\[
+p_X(2) = \frac{400}{1000} \times \frac{399}{999} \approx 0.1598,
+\]
+\[
+p_X(1) = 1 - p_X(0) - p_X(2) \approx 0.4804.
+\]
+\end{worked}
+
+\section{Continuous Random Variables}
+A random variable is continuous if it can take any value in an interval.
+
+\begin{definition}[Probability Density Function (PDF)]
+For a continuous random variable $X$, the PDF $f_X(x)$ satisfies:
+\[
+\Prob(a \le X \le b) = \int_a^b f_X(x)\,dx,
+\]
+and
+\[
+\int_{-\infty}^{\infty} f_X(x)\,dx = 1.
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Uniform Example:}
+If $X \sim \text{Uniform}(0,1)$, then:
+\[
+f_X(x) = 1 \quad \text{for } 0 \le x \le 1.
+\]
+Then $\Prob(0.2 \le X \le 0.5) = \int_{0.2}^{0.5} 1\,dx = 0.3$.
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Random Variable}
+A fair die is rolled. Let $X$ be the number showing.
+\begin{enumerate}[label=(\alph*)]
+    \item What is the PMF of $X$?
+    \item What is $\Prob(X \ge 4)$?
+\end{enumerate}
+\end{exercise}
+\begin{solution}
+(a) $p_X(x) = \frac{1}{6}$ for $x = 1,2,3,4,5,6$.
+(b) $\Prob(X \ge 4) = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = \frac{1}{2}$.
+\end{solution}
+
+%===========================================================
+\chapter{Discrete Probability Distributions}
+%===========================================================
+
+\section{The Bernoulli Distribution}
+A Bernoulli random variable takes value 1 with probability $p$ and 0 with probability $1-p$.
+
+\begin{definition}[Bernoulli Distribution]
+$X \sim \text{Bernoulli}(p)$ has PMF:
+\[
+p_X(1) = p, \quad p_X(0) = 1-p.
+\]
+\end{definition}
+
+\section{The Binomial Distribution}
+A binomial random variable counts the number of successes in $n$ independent Bernoulli trials.
+
+\begin{definition}[Binomial Distribution]
+$X \sim \text{Binomial}(n, p)$ has PMF:
+\[
+\Prob(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0,1,\ldots,n.
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Example:}
+A student guesses on a 10-question multiple-choice test (each with 4 options). What is the probability of getting exactly 3 correct?
+\[
+\Prob(X = 3) = \binom{10}{3} (0.25)^3 (0.75)^7 \approx 0.2503.
+\]
+\end{worked}
+
+\section{The Poisson Distribution}
+A Poisson random variable counts the number of events in a fixed interval.
+
+\begin{definition}[Poisson Distribution]
+$X \sim \text{Poisson}(\lambda)$ has PMF:
+\[
+\Prob(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0,1,2,\ldots
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Example:}
+A call centre receives $\lambda = 5$ calls per hour. What is the probability of receiving exactly 3 calls in an hour?
+\[
+\Prob(X = 3) = \frac{e^{-5} 5^3}{3!} = \frac{0.006738 \times 125}{6} \approx 0.1404.
+\]
+\end{worked}
+
+\section{Exercises}
+\begin{exercise}{Binomial Distribution}
+A fair coin is tossed 8 times. Let $X$ be the number of heads.
+\begin{enumerate}[label=(\alph*)]
+    \item Find $\Prob(X = 3)$.
+    \item Find $\Prob(X \ge 5)$.
+\end{enumerate}
+\end{exercise}
+\begin{solution}
+(a) $\binom{8}{3}(0.5)^3(0.5)^5 = 56 \times (0.5)^8 = 56/256 \approx 0.21875$.
+(b) $\Prob(X \ge 5) = \Prob(X=5) + \Prob(X=6) + \Prob(X=7) + \Prob(X=8)$.
+$\binom{8}{5} = 56$, $\binom{8}{6} = 28$, $\binom{8}{7} = 8$, $\binom{8}{8} = 1$.
+$(56 + 28 + 8 + 1)/256 = 93/256 \approx 0.3633$.
+\end{solution}
+
+%===========================================================
+\chapter{Continuous Probability Distributions}
+%===========================================================
+
+\section{The Uniform Distribution}
+\begin{definition}[Uniform Distribution]
+$X \sim \text{Uniform}(a,b)$ has PDF:
+\[
+f_X(x) = \frac{1}{b-a}, \quad a \le x \le b.
+\]
+\end{definition}
+
+\section{The Exponential Distribution}
+\begin{definition}[Exponential Distribution]
+$X \sim \text{Exponential}(\lambda)$ has PDF:
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad x \ge 0.
+\]
+\end{definition}
+
+\section{The Normal Distribution}
+The normal distribution is the most important continuous distribution.
+
+\begin{definition}[Normal Distribution]
+$X \sim N(\mu, \sigma^2)$ has PDF:
+\[
+f_X(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Standard Normal:}
+If $Z \sim N(0,1)$, we can compute probabilities using the standard normal table.
+\[
+\Prob(Z \le 1.96) \approx 0.975.
+\]
+\end{worked}
+
+%===========================================================
+\chapter{Expectation and Variance}
+%===========================================================
+
+\section{Expected Value}
+The expected value is the long-run average of a random variable.
+
+\begin{definition}[Expected Value]
+For a discrete random variable $X$ with PMF $p_X(x)$:
+\[
+\E[X] = \sum_x x \, p_X(x).
+\]
+For a continuous random variable $X$ with PDF $f_X(x)$:
+\[
+\E[X] = \int_{-\infty}^{\infty} x \, f_X(x)\,dx.
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Binomial Example:}
+If $X \sim \text{Binomial}(10, 0.5)$, then $\E[X] = 10 \times 0.5 = 5$.
+\end{worked}
+
+\section{Variance}
+The variance measures the spread of a random variable around its mean.
+
+\begin{definition}[Variance]
+\[
+\Var(X) = \E[(X - \E[X])^2] = \E[X^2] - (\E[X])^2.
+\]
+\end{definition}
+
+\begin{worked}
+\textbf{Binomial Example:}
+If $X \sim \text{Binomial}(10, 0.5)$, then $\Var(X) = 10 \times 0.5 \times 0.5 = 2.5$.
+\end{worked}
+
+%===========================================================
+\chapter{Limit Theorems}
+%===========================================================
+
+\section{Law of Large Numbers (LLN)}
+The LLN states that the sample average converges to the expected value as the sample size grows.
+
+\begin{theorem}[Law of Large Numbers]
+If $X_1, X_2, \ldots$ are iid with $\E[X_i] = \mu$, then:
+\[
+\frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{\text{prob}} \mu.
+\]
+\end{theorem}
+
+\section{Central Limit Theorem (CLT)}
+The CLT is the most important result in probability for statistics.
+
+\begin{theorem}[Central Limit Theorem]
+If $X_1, X_2, \ldots, X_n$ are iid with mean $\mu$ and variance $\sigma^2$, then for large $n$:
+\[
+\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{\text{dist}} N(0,1).
+\]
+\end{theorem}
+
+\begin{worked}
+\textbf{Example:}
+A population has $\mu = 100$, $\sigma = 15$. For $n = 36$:
+\[
+\Prob(\bar{X} \le 105) \approx \Prob\left(Z \le \frac{105-100}{15/\sqrt{36}}\right) = \Prob(Z \le 2) \approx 0.9772.
+\]
+\end{worked}
+
+%===========================================================
+\appendix
+\chapter{Formula Summary}
+\section*{Core Formulas}
+\begin{longtable}{p{4.5cm} p{9cm}}
+\toprule
+\textbf{Concept} & \textbf{Formula} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Concept} & \textbf{Formula} \\
+\midrule
+\endhead
+Probability & $\displaystyle \Prob(A)=\frac{|A|}{|\Omega|}$ \\[8pt]
+Complement & $\displaystyle \Prob(A^c)=1-\Prob(A)$ \\[8pt]
+Union & $\displaystyle \Prob(A\cup B)=\Prob(A)+\Prob(B)-\Prob(A\cap B)$ \\[8pt]
+Conditional & $\displaystyle \Prob(A\mid B)=\frac{\Prob(A\cap B)}{\Prob(B)}$ \\[8pt]
+Multiplication & $\displaystyle \Prob(A\cap B)=\Prob(A)\Prob(B\mid A)$ \\[8pt]
+Independence & $\displaystyle \Prob(A\cap B)=\Prob(A)\Prob(B)$ \\[8pt]
+Total Probability & $\displaystyle \Prob(B)=\sum_i \Prob(B\mid A_i)\Prob(A_i)$ \\[8pt]
+Bayes & $\displaystyle \Prob(A\mid B)=\frac{\Prob(B\mid A)\Prob(A)}{\Prob(B)}$ \\[8pt]
+Expected Value & $\displaystyle \E[X]=\sum_x x p_X(x)$ \\[8pt]
+Variance & $\displaystyle \Var(X)=\E[X^2]-(\E[X])^2$ \\[8pt]
+Binomial PMF & $\displaystyle \binom{n}{k}p^k(1-p)^{n-k}$ \\[8pt]
+Poisson PMF & $\displaystyle \frac{e^{-\lambda}\lambda^k}{k!}$ \\[8pt]
+Normal PDF & $\displaystyle \frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/(2\sigma^2)}$ \\[8pt]
+\bottomrule
+\end{longtable}
+
+\chapter{Glossary of Terms}
+\begin{description}
+    \item[Central Limit Theorem] The distribution of sample means approaches normality.
+    \item[Conditional Probability] Probability of an event given another has occurred.
+    \item[Event] A subset of the sample space.
+    \item[Expected Value] The long-run average of a random variable.
+    \item[Independent] Occurrence of one event does not affect another.
+    \item[Mutually Exclusive] Two events that cannot occur together.
+    \item[Probability Space] $(\Omega, \mathcal{F}, \Prob)$.
+    \item[Random Variable] A function from the sample space to $\mathbb{R}$.
+    \item[Sample Space] The set of all possible outcomes.
+    \item[Variance] Measure of spread around the mean.
+\end{description}
+
+\chapter{Solutions to All Exercises}
+All solutions are provided in the preceding chapters. Refer to the relevant sections.
+
+\end{document}
